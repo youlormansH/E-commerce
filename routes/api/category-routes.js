@@ -77,7 +77,6 @@ router.put('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-
 });
 
 router.delete('/:id', async (req, res) => {
@@ -87,12 +86,10 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id
       }
     });
-
     if (!locationData) {
       res.status(404).json({ message: 'No Category found with this id!' });
       return;
     }
-
     res.status(200).json(locationData);
   } catch (err) {
     res.status(500).json(err);
