@@ -3,16 +3,11 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
-router.get('/', (req, res) => {
+router.get('/', async(req, res) => {
   // find all categories
   // be sure to include its associated Products
   Category.findAll({
-    include: [
-      {
-        model: Product,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category']
-      }
-    ]
+    include: [Product]
   })
   .then(rgCategoryData => res.json(rgCategoryData))
   .catch(err => {
@@ -86,10 +81,6 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id
       }
     });
-    if (!locationData) {
-      res.status(404).json({ message: 'No Category found with this id!' });
-      return;
-    }
     res.status(200).json(locationData);
   } catch (err) {
     res.status(500).json(err);
